@@ -30,28 +30,15 @@ import isse.mbr.model.parsetree.ProductType;
 import isse.mbr.model.parsetree.ReferencedPVSInstance;
 import isse.mbr.model.parsetree.SoftConstraint;
 import isse.mbr.model.parsetree.VotingInstance;
-import isse.mbr.model.types.ArrayType;
-import isse.mbr.model.types.BoolType;
-import isse.mbr.model.types.FloatType;
-import isse.mbr.model.types.IntType;
-import isse.mbr.model.types.IntervalType;
-import isse.mbr.model.types.MiniZincParType;
-import isse.mbr.model.types.MiniZincVarType;
-import isse.mbr.model.types.MultiSetType;
-import isse.mbr.model.types.NamedRef;
-import isse.mbr.model.types.NumericValue;
-import isse.mbr.model.types.PVSFormalParameter;
-import isse.mbr.model.types.PVSType;
-import isse.mbr.model.types.PrimitiveType;
-import isse.mbr.model.types.SetType;
+import isse.mbr.model.types.*;
 import isse.mbr.model.voting.VotingFactory;
 import isse.mbr.model.voting.VotingProcedure;
 
 /**
- * 
+ *
  * Parses a MiniBrass file using an appropriate lexer just a simple recursive
  * descent parser
- * 
+ *
  * @author Alexander Schiendorfer
  *
  */
@@ -264,7 +251,7 @@ public class MiniBrassParser {
 
 	/**
 	 * statement (statement)+
-	 * 
+	 *
 	 * @param model2
 	 * @throws MiniBrassParseException
 	 */
@@ -277,7 +264,7 @@ public class MiniBrassParser {
 
 	/**
 	 * The main method for all kinds of items
-	 * 
+	 *
 	 * @param model
 	 * @throws MiniBrassParseException
 	 */
@@ -319,10 +306,10 @@ public class MiniBrassParser {
 
 	/**
 	 * "bind" ident "to" ident ";"
-	 * 
+	 *
 	 * Ex. usage "bind voterCount to s;" or bind vi1.voterCount to s; if we have
 	 * multiple vote items
-	 * 
+	 *
 	 * @param model2
 	 * @throws MiniBrassParseException
 	 */
@@ -361,14 +348,14 @@ public class MiniBrassParser {
 	 * PVS: fuzzyInstance = new FuzzyCsp(3); PVS: weightedInstance = new
 	 * WeightedCsp(3, 8, [2,1,2]); PVS: cr = new ConstraintRelationships(2, [| 1, 2
 	 * |]); PVS: hierarchy = cr lex fuzzyInstance
-	 * 
+	 *
 	 * PVSItem -> "PVS" ":" ident "=" PVSInst ";" PVSInst -> PVSDiProd ( "lex"
 	 * PVSDiProd )* PVSDiProd -> PVSAtom ("*" PVSAtom)* PVSAtom -> "new" ident "("
 	 * stringlit "," int ("," MZNLiteral)* ")" ";" | ident
-	 * 
+	 *
 	 * pvs1, pvs2, pvs3 pvs1 lex pvs2 * pvs3 (should be read as pvs1 lex (pvs2 *
 	 * pvs3) pvs1 * pvs2 lex pvs3
-	 * 
+	 *
 	 * @param model2
 	 * @throws MiniBrassParseException
 	 */
@@ -404,7 +391,7 @@ public class MiniBrassParser {
 
 	/**
 	 * OutputItem -> "output" StringLit ";"
-	 * 
+	 *
 	 * @param model
 	 * @throws MiniBrassParseException
 	 */
@@ -418,7 +405,7 @@ public class MiniBrassParser {
 
 	/**
 	 * PVSInst -> PVSDiProd ( "lex" PVSDiProd )
-	 * 
+	 *
 	 * @param model2
 	 * *
 	 * @return
@@ -449,7 +436,7 @@ public class MiniBrassParser {
 
 	/**
 	 * PVSDiProd -> PVSAtom ("*" PVSAtom)
-	 * 
+	 *
 	 * @return *
 	 */
 	private AbstractPVSInstance PVSDiProd(MiniBrassAST model) throws MiniBrassParseException {
@@ -477,9 +464,9 @@ public class MiniBrassParser {
 	/**
 	 * PVSAtom -> "new" ident "(" stringlit "," intlit ("," MZNLiteral)* ")" | ident
 	 * | ident "(" PVSAtom ")" | "(" PVSInst ")"
-	 * 
+	 *
 	 * @throws MiniBrassParseException
-	 * 
+	 *
 	 */
 	private AbstractPVSInstance PVSAtom(MiniBrassAST model) throws MiniBrassParseException {
 		if (currSy == MiniBrassSymbol.NewSy) {
@@ -619,7 +606,7 @@ public class MiniBrassParser {
 
 	/**
 	 * solve ( ident | VoteItem) ;
-	 * 
+	 *
 	 * @throws MiniBrassParseException
 	 */
 	private AbstractPVSInstance solveItem() throws MiniBrassParseException {
@@ -632,7 +619,7 @@ public class MiniBrassParser {
 
 	/**
 	 * vote([ident1,...,identn], voteType)
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 * @throws MiniBrassParseException
@@ -698,7 +685,7 @@ public class MiniBrassParser {
 
 	/**
 	 * morphism ConstraintRelationships -> WeightedCsp: ToWeighted = weight_cr;
-	 * 
+	 *
 	 * @return
 	 */
 	private Morphism morphismItem() throws MiniBrassParseException {
@@ -796,7 +783,7 @@ public class MiniBrassParser {
 	/**
 	 * "type" ident "=" "PVSType" "<" MiniZincType ( "," MiniZincType) ">" [
 	 * "represents" ident]
-	 * 
+	 *
 	 * @throws MiniBrassParseException
 	 */
 	private PVSType typeItem() throws MiniBrassParseException {
@@ -907,7 +894,7 @@ public class MiniBrassParser {
 	/**
 	 * Things like int: k; 1..k: top; array[1..nScs] of 1..k: weights; array[int,
 	 * 1..2] of 1..nScs: crEdges;
-	 * 
+	 *
 	 * @param newType
 	 * @return
 	 * @throws MiniBrassParseException
@@ -1064,7 +1051,7 @@ public class MiniBrassParser {
 
 	/**
 	 * Is either of times -> xyz, is_worse ..., top ... PVS-Sym "->" AnyCharacters
-	 * 
+	 *
 	 * @param newType
 	 * @throws MiniBrassParseException
 	 */
@@ -1120,7 +1107,7 @@ public class MiniBrassParser {
 
 	/**
 	 * set of PRIMTYPE | PRIMTYPE
-	 * 
+	 *
 	 * @throws MiniBrassParseException
 	 */
 	protected MiniZincParType MiniZincParType(PVSType scopeType) throws MiniBrassParseException {
@@ -1152,7 +1139,7 @@ public class MiniBrassParser {
 
 	/**
 	 * set of PRIMTYPE | PRIMTYPE
-	 * 
+	 *
 	 * @throws MiniBrassParseException
 	 */
 	protected MiniZincVarType MiniZincVarType(PVSType scopeType) throws MiniBrassParseException {
@@ -1168,8 +1155,7 @@ public class MiniBrassParser {
 	}
 
 	private PrimitiveType primType(PVSType scopeType) throws MiniBrassParseException {
-		if (currSy == MiniBrassSymbol.FloatSy || currSy == MiniBrassSymbol.BoolSy || currSy == MiniBrassSymbol.IntSy) {
-			switch (currSy) {
+		switch (currSy) {
 			case FloatSy:
 				getNextSy();
 				return new FloatType();
@@ -1179,18 +1165,17 @@ public class MiniBrassParser {
 			case IntSy:
 				getNextSy();
 				return new IntType();
+			case StringSy:
+				getNextSy();
+				return new StringType();
 			default:
-				throw new MiniBrassParseException("This should not happen");
-			}
-		} else {
-			return intervalType(scopeType);
+				return intervalType(scopeType);
 		}
-
 	}
 
 	/**
 	 * For now : intLit | floatLit | ident ".." intLit | floatLit | ident
-	 * 
+	 *
 	 * @return
 	 * @throws MiniBrassParseException
 	 */
@@ -1223,7 +1208,7 @@ public class MiniBrassParser {
 
 	/**
 	 * "include" ident ";" (just read ident, when entering
-	 * 
+	 *
 	 * @param model2
 	 * @throws MiniBrassParseException
 	 */
@@ -1275,7 +1260,7 @@ public class MiniBrassParser {
 		}
 		throw new MiniBrassParseException("Expected either symbol of " + Arrays.toString(acceptableSymbols.toArray()) + " but found " + currSy);
 	}
-	
+
 	protected void getNextSy() {
 		currSy = lexer.getNextSymbol();
 		// System.out.println("Returning symbol: "+currSy);
