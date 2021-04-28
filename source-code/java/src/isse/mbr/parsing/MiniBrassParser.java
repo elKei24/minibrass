@@ -1168,6 +1168,10 @@ public class MiniBrassParser {
 			case StringSy:
 				getNextSy();
 				return new StringType();
+			case OptSy:
+				getNextSy();
+				PrimitiveType decoratedType = primType(scopeType);
+				return new OptType(decoratedType);
 			default:
 				return intervalType(scopeType);
 		}

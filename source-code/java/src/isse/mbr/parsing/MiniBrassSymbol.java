@@ -50,6 +50,7 @@ public enum MiniBrassSymbol {
 	BoolSy,             // bool
 	FloatSy,            // float
 	StringSy,           // string
+	OptSy,              // opt
 	IntLitSy,           // any integer
 	FloatLitSy,         // any float
 	FalseLitSy,         // false
